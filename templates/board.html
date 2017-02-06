@@ -14,7 +14,9 @@
                 <tr>
                 {% for j in cols %}
                     <td>
-                        {{ board[i][j].text }}
+                        {% if board[i][j] %}
+                        <a href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}>{{ board[i][j].text }}</a>
+                        {% endif %}
                     </td>
                 {% endfor %}
                 </tr>
