@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="/static/css/chess.css"/>
+</head>
+<body>
+
+    <table>
+        <tbody>
+            {% for i in rows %}
+                <tr>
+                {% for j in cols %}
+                    <td>
+                        {{ board[i][j].text }}
+                    </td>
+                {% endfor %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</body>
+</html>
