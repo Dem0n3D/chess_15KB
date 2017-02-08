@@ -15,7 +15,11 @@
                 {% for j in cols %}
                     <td>
                         {% if board[i][j] %}
-                        <a href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}>{{ board[i][j].text }}</a>
+                            <div class="figure {{ 'selected' if '{}{}'.format(i, j) == start else '' }}">
+                                <a href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}>
+                                    {{ board[i][j].text }}
+                                </a>
+                            </div>
                         {% endif %}
                     </td>
                 {% endfor %}
