@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -43,6 +43,12 @@ def board1():
 @app.route('/board/<start>')
 def turn1(start):
     return render_template("board.html", **{"rows": range(8), "cols": range(8), "board": board, "start": start})
+
+@app.route('/board/<start>/<end>')
+def turn2(start, end):
+    board[int(end[0])][int(end[1])] = board[int(start[0])][int(start[1])]
+    board[int(start[0])][int(start[1])] = None
+    return redirect(url_for("board1"))
 
 if __name__ == '__main__':
     app.run()
