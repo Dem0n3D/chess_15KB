@@ -16,3 +16,12 @@ tr:nth-child(odd) td:nth-child(odd) {
 .selected {
     background-color: green;
 }
+
+.figure {
+    font-size: xx-large;
+    text-align: center;
+}
+
+.figure a {
+    color: brown;
+}
