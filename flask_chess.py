@@ -21,8 +21,8 @@ for c in range(2):
             {"name": 'rook', "text": '♜' if c == 1 else '♖', "color": colors[c], "row": rows[c], "col": 7},
             {"name": 'knight', "text": '♞' if c == 1 else '♘', "color": colors[c], "row": rows[c], "col": 6},
             {"name": 'bishop', "text": '♝' if c == 1 else '♗', "color": colors[c], "row": rows[c], "col": 5},
-            {"name": 'king', "text": '♚' if c == 1 else '♔', "color": colors[c], "row": rows[c], "col": 3},
-            {"name": 'queen', "text": '♛' if c == 1 else '♕', "color": colors[c], "row": rows[c], "col": 4},
+            {"name": 'king', "text": '♚' if c == 1 else '♔', "color": colors[c], "row": rows[c], "col": 4},
+            {"name": 'queen', "text": '♛' if c == 1 else '♕', "color": colors[c], "row": rows[c], "col": 3},
         ]
 
 
@@ -36,6 +36,7 @@ def find_figure(i, j):
 board = [[find_figure(i, j) for j in range(8)] for i in range(8)]
 
 
+@app.route('/')
 @app.route('/board')
 def board1():
     return render_template("board.html", **{"rows": range(8), "cols": range(8), "board": board})
