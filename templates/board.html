@@ -20,6 +20,8 @@
                                     {{ board[i][j].text }}
                                 </a>
                             </div>
+                        {% else %}
+                            <a class="cell" href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}></a>
                         {% endif %}
                     </td>
                 {% endfor %}

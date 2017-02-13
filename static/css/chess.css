@@ -25,3 +25,9 @@ tr:nth-child(odd) td:nth-child(odd) {
 .figure a {
     color: brown;
 }
+
+a.cell {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
