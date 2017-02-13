@@ -1,7 +1,12 @@
 from flask import Flask, render_template, redirect, url_for
 
+from alchemy import db
+
 app = Flask(__name__)
 app.config["DEBUG"] = True
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///./test.db'
+db.init_app(app)
 
 colors = ['black', 'white']
 rows = [0, 7]
