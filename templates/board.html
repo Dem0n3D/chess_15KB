@@ -16,12 +16,12 @@
                     <td>
                         {% if board[i][j] %}
                             <div class="figure {{ 'selected' if '{}{}'.format(i, j) == start else '' }}">
-                                <a href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}>
+                                <a href={{ "/board/{}/{}/{}{}".format(id, start, i, j) if start else "/board/{}/{}{}".format(id, i, j)}}>
                                     {{ board[i][j].text }}
                                 </a>
                             </div>
                         {% else %}
-                            <a class="cell" href={{ "/board/{}/{}{}".format(start, i, j) if start else "/board/{}{}".format(i, j)}}></a>
+                            <a class="cell" href={{ "/board/{}/{}/{}{}".format(id, start, i, j) if start else "/board/{}/{}{}".format(id, i, j)}}></a>
                         {% endif %}
                     </td>
                 {% endfor %}
