@@ -3,6 +3,8 @@ from sqlalchemy.orm import relationship, backref
 
 from alchemy import db
 
+import chess
+
 
 class Turn(db.Model):
 
@@ -13,6 +15,9 @@ class Turn(db.Model):
 
     game_id = Column(Integer, ForeignKey("game.id"), nullable=False)
     game = relationship("Game", backref=backref("turns", order_by=id))
+
+    def uci(self):
+        return "{}{}{}{}".format("abcdefgh"[int(self.src[1])], 8 - int(self.src[0]), "abcdefgh"[int(self.dst[1])], 8 - int(self.dst[0]))
 
 
 class Figure(db.Model):
@@ -41,44 +46,35 @@ class Game(db.Model):
 
     id = Column(Integer, primary_key=True)
 
+    fen = Column(String(1000), nullable=False, default="rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
+
     def move(self, start, end):
         turn = Turn(src=start, dst=end, game=self)
         db.session.add(turn)
+
+        move = chess.Move.from_uci(turn.uci())
+        board = chess.Board(self.fen)
+
+        if(move not in board.legal_moves):
+            raise Exception("Неправильный ход!")
+
+        board.push(move)
+
+        self.fen = board.fen()
+
         db.session.commit()
 
     def board(self):
-        colors = ['black', 'white']
-        rows = [0, 7]
+        board = chess.Board(self.fen)
 
-        figures = []
-
-        for c in range(2):
-            for i in range(8):
-                figures.append(
-                    {"name": 'pawn', "text": '♟' if c == 1 else '♙', "color": colors[c], "row": 1 if c == 0 else 6,
-                     "col": i})
-
-                figures += [
-                    {"name": 'rook', "text": '♜' if c == 1 else '♖', "color": colors[c], "row": rows[c], "col": 0},
-                    {"name": 'knight', "text": '♞' if c == 1 else '♘', "color": colors[c], "row": rows[c], "col": 1},
-                    {"name": 'bishop', "text": '♝' if c == 1 else '♗', "color": colors[c], "row": rows[c], "col": 2},
-                    {"name": 'rook', "text": '♜' if c == 1 else '♖', "color": colors[c], "row": rows[c], "col": 7},
-                    {"name": 'knight', "text": '♞' if c == 1 else '♘', "color": colors[c], "row": rows[c], "col": 6},
-                    {"name": 'bishop', "text": '♝' if c == 1 else '♗', "color": colors[c], "row": rows[c], "col": 5},
-                    {"name": 'king', "text": '♚' if c == 1 else '♔', "color": colors[c], "row": rows[c], "col": 4},
-                    {"name": 'queen', "text": '♛' if c == 1 else '♕', "color": colors[c], "row": rows[c], "col": 3},
-                ]
-
-        def find_figure(i, j):
-            try:
-                return [f for f in figures if f["row"] == i and f["col"] == j][0]
-            except IndexError:
-                return None
-
-        board = [[find_figure(i, j) for j in range(8)] for i in range(8)]
-
-        for turn in self.turns:
-            board[int(turn.dst[0])][int(turn.dst[1])] = board[int(turn.src[0])][int(turn.src[1])]
-            board[int(turn.src[0])][int(turn.src[1])] = None
-
-        return board
+        return [[{
+              "text": {
+                  "r": "♜",
+                  "n": "♞",
+                  "b": "♝",
+                  "k": "♚",
+                  "q": "♛",
+                  "p": "♟",
+              }[c.lower()],
+              "color": "white" if c.isupper() else "black",
+          } if c != "." else None for c in r.split(' ')] for r in str(board).split('\n')]

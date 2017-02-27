@@ -22,8 +22,12 @@ tr:nth-child(odd) td:nth-child(odd) {
     text-align: center;
 }
 
-.figure a {
-    color: brown;
+.figure.white a {
+    color: green;
+}
+
+.figure.black a {
+    color: red;
 }
 
 a.cell {
