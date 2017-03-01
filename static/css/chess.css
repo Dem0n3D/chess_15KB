@@ -22,15 +22,26 @@ tr:nth-child(odd) td:nth-child(odd) {
     text-align: center;
 }
 
+.figure a {
+    text-decoration: none;
+}
+
+.figure.white,
 .figure.white a {
     color: green;
 }
 
+.figure.black,
 .figure.black a {
     color: red;
 }
 
-a.cell {
+div.legal {
+    background-color: lightgreen;
+}
+
+div.cell,
+div.cell a {
     display: block;
     width: 100%;
     height: 100%;

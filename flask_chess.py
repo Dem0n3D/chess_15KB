@@ -22,16 +22,19 @@ def board1(id):
         db.session.add(game)
         db.session.commit()
 
-    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board()})
+    moves = [m.uci()[0:2] for m in chess.Board(game.fen).legal_moves]
+
+    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(),
+                                            "moves": moves})
 
 @app.route('/board/<int:id>/<start>')
 def turn1(id, start):
     game = db.session.query(Game).get(id)
 
-    #board = chess.Board(game.fen)
-    #moves = [m for move in board.legal_moves]
+    moves = [m.uci()[2:] for m in chess.Board(game.fen).legal_moves if m.uci()[:2] == start]
 
-    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(), "start": start})
+    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(),
+                                            "start": start, "moves": moves})
 
 @app.route('/board/<int:id>/<start>/<end>')
 def turn2(id, start, end):

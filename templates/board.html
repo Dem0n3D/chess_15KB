@@ -15,13 +15,21 @@
                 {% for j in cols %}
                     <td>
                         {% if board[i][j] %}
-                            <div class="figure {{ board[i][j].color }} {{ 'selected' if '{}{}'.format("abcdefgh"[j], 8 - i) == start else '' }}">
-                                <a href={{ "/board/{}/{}/{}{}".format(id, start, "abcdefgh"[j], 8 - i) if start else "/board/{}/{}{}".format(id, "abcdefgh"[j], 8 - i)}}>
+                            <div class="figure {{ board[i][j].color }} {{ 'selected' if '{}{}'.format("abcdefgh"[j], 8 - i) == start else '' }} {{ "legal" if start and '{}{}'.format("abcdefgh"[j], 8 - i) in moves else "" }}">
+                                {% if '{}{}'.format("abcdefgh"[j], 8 - i) in moves %}
+                                    <a href={{ "/board/{}/{}/{}{}".format(id, start, "abcdefgh"[j], 8 - i) if start else "/board/{}/{}{}".format(id, "abcdefgh"[j], 8 - i)}}>
+                                        {{ board[i][j].text }}
+                                    </a>
+                                {% else %}
                                     {{ board[i][j].text }}
-                                </a>
+                                {% endif %}
                             </div>
                         {% else %}
-                            <a class="cell" href={{ "/board/{}/{}/{}{}".format(id, start, "abcdefgh"[j], 8 - i) if start else "/board/{}/{}{}".format(id, "abcdefgh"[j], 8 - i)}}></a>
+                            <div class="cell {{ "legal" if start and '{}{}'.format("abcdefgh"[j], 8 - i) in moves else "" }}">
+                                {% if '{}{}'.format("abcdefgh"[j], 8 - i) in moves %}
+                                    <a href={{ "/board/{}/{}/{}{}".format(id, start, "abcdefgh"[j], 8 - i) if start else "/board/{}/{}{}".format(id, "abcdefgh"[j], 8 - i)}}></a>
+                                {% endif %}
+                            </div>
                         {% endif %}
                     </td>
                 {% endfor %}
