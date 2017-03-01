@@ -28,6 +28,9 @@ def board1(id):
 def turn1(id, start):
     game = db.session.query(Game).get(id)
 
+    #board = chess.Board(game.fen)
+    #moves = [m for move in board.legal_moves]
+
     return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(), "start": start})
 
 @app.route('/board/<int:id>/<start>/<end>')

@@ -14,7 +14,7 @@ tr:nth-child(odd) td:nth-child(odd) {
 }
 
 .selected {
-    background-color: green;
+    background-color: yellow;
 }
 
 .figure {

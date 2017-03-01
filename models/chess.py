@@ -17,7 +17,7 @@ class Turn(db.Model):
     game = relationship("Game", backref=backref("turns", order_by=id))
 
     def uci(self):
-        return "{}{}{}{}".format("abcdefgh"[int(self.src[1])], 8 - int(self.src[0]), "abcdefgh"[int(self.dst[1])], 8 - int(self.dst[0]))
+        return self.src + self.dst
 
 
 class Figure(db.Model):
