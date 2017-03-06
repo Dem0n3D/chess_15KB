@@ -1,3 +1,7 @@
+import $ from 'jquery';
+
+import '../css/chess.css';
+
 $(function() {
 
     var table = $("<table>");
