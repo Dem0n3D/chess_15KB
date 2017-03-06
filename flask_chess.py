@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, jsonify
 
 from alchemy import db
 
@@ -16,24 +16,28 @@ db.init_app(app)
 @app.route('/<int:id>')
 @app.route('/board/<int:id>')
 def board(id):
-    return render_template("board.html")
-
-"""
-@app.route('/')
-@app.route('/board/<int:id>')
-def board1(id):
     game = db.session.query(Game).get(id)
 
-    if(not game):
+    if (not game):
         game = Game(id=id)
         db.session.add(game)
         db.session.commit()
 
+    return render_template("board.html", id=id)
+
+
+@app.route('/board/<int:id>/figures')
+def board1(id):
+    game = db.session.query(Game).get(id)
+
     moves = [m.uci()[0:2] for m in chess.Board(game.fen).legal_moves]
 
-    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(),
-                                            "moves": moves})
+    return jsonify({
+        "board": game.board(),
+        "moves": moves
+    })
 
+"""
 @app.route('/board/<int:id>/<start>')
 def turn1(id, start):
     game = db.session.query(Game).get(id)

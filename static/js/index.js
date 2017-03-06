@@ -18,4 +18,8 @@ $(function() {
 
     $("body").html(table);
 
+    $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
+        console.log(resp)
+    });
+
 });
