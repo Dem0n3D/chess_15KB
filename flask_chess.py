@@ -12,6 +12,13 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 db.init_app(app)
 
+
+@app.route('/<int:id>')
+@app.route('/board/<int:id>')
+def board(id):
+    return render_template("board.html")
+
+"""
 @app.route('/')
 @app.route('/board/<int:id>')
 def board1(id):
@@ -43,6 +50,7 @@ def turn2(id, start, end):
     game.move(start, end)
 
     return redirect(url_for("board1", id=id))
+"""
 
 if __name__ == '__main__':
     app.run()
