@@ -30,7 +30,7 @@ def board(id):
 def board1(id):
     game = db.session.query(Game).get(id)
 
-    moves = [m.uci()[0:2] for m in chess.Board(game.fen).legal_moves]
+    moves = [[m.uci()[0:2], m.uci()[2:]] for m in chess.Board(game.fen).legal_moves]
 
     return jsonify({
         "board": game.board(),
