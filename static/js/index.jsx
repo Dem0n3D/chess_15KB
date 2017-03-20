@@ -4,6 +4,9 @@ import '../css/chess.css';
 
 import Backbone from 'backbone';
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+
 const Game = Backbone.Model.extend({
 
     defaults: {
@@ -13,6 +16,16 @@ const Game = Backbone.Model.extend({
     }
 
 });
+
+class Figure extends React.Component {
+
+    render() {
+        return (
+            <div className={`figure ${this.props.color}`}>{this.props.text}</div>
+        );
+    }
+
+}
 
 $(function() {
 
@@ -34,9 +47,10 @@ $(function() {
                 div.addClass("cell");
 
                 if(game.get("board")[i][j]) {
-                    div.addClass("figure");
-                    div.addClass(game.get("board")[i][j].color);
-                    div.text(game.get("board")[i][j].text);
+                    ReactDOM.render(
+                        <Figure color={game.get("board")[i][j].color} text={game.get("board")[i][j].text} />,
+                        div
+                    );
 
                     if(game.get("moves").map(pair => pair[0]).includes(id)) {
                         div.addClass("can_move");
