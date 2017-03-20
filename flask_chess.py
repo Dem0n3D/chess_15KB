@@ -37,24 +37,13 @@ def board1(id):
         "moves": moves
     })
 
-"""
-@app.route('/board/<int:id>/<start>')
-def turn1(id, start):
-    game = db.session.query(Game).get(id)
-
-    moves = [m.uci()[2:] for m in chess.Board(game.fen).legal_moves if m.uci()[:2] == start]
-
-    return render_template("board.html", **{"id": id, "rows": range(8), "cols": range(8), "board": game.board(),
-                                            "start": start, "moves": moves})
-
-@app.route('/board/<int:id>/<start>/<end>')
-def turn2(id, start, end):
+@app.route('/board/<int:id>/<start>/<end>', methods=['POST'])
+def turn(id, start, end):
     game = db.session.query(Game).get(id)
 
     game.move(start, end)
 
     return redirect(url_for("board1", id=id))
-"""
 
 if __name__ == '__main__':
     app.run()

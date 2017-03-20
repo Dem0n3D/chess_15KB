@@ -1,6 +1,7 @@
 td {
     height: 40px;
     width: 40px;
+    padding: 0;
 }
 
 tr:nth-child(even) td:nth-child(even),
@@ -42,6 +43,7 @@ tr:nth-child(odd) td:nth-child(odd) {
 
 div.legal {
     background-color: lightgreen;
+    cursor: pointer;
 }
 
 div.cell,

@@ -2,11 +2,25 @@ import $ from 'jquery';
 
 import '../css/chess.css';
 
+import Backbone from 'backbone';
+
+const Game = Backbone.Model.extend({
+
+    defaults: {
+        "board": [],
+        "moves": [],
+        "selected": undefined
+    }
+
+});
+
 $(function() {
 
     var selected = null;
 
-    $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
+    const game = new Game();
+
+    game.bind("change", () => {
         var table = $("<table>");
         var tbody = $("<tbody>");
         for(var i = 0; i < 8; i++) {
@@ -14,14 +28,37 @@ $(function() {
             for(var j = 0; j < 8; j++) {
                 var td = $("<td>");
                 let div = $("<div>");
+                const id = `${"abcdefgh"[j]}${8-i}`;
 
-                div.attr("id", `${"abcdefgh"[j]}${8-i}`);
+                div.attr("id", id);
                 div.addClass("cell");
 
-                if(resp.board[i][j]) {
+                if(game.get("board")[i][j]) {
                     div.addClass("figure");
-                    div.addClass(resp.board[i][j].color);
-                    div.text(resp.board[i][j].text);
+                    div.addClass(game.get("board")[i][j].color);
+                    div.text(game.get("board")[i][j].text);
+
+                    if(game.get("moves").map(pair => pair[0]).includes(id)) {
+                        div.addClass("can_move");
+
+                        div.click(e => {
+                            game.set("selected", id);
+                        });
+                    }
+
+                    if(game.get("selected") && game.get("selected") == id) {
+                        div.addClass("selected");
+                    }
+                }
+
+                if(game.get("selected") && game.get("moves").filter(pair => pair[0] == game.get("selected")).map(pair => pair[1]).includes(id)) {
+                    div.addClass("legal");
+
+                    div.click(e => {
+                        $.post(`/board/${$("meta[name='game_id']").data("id")}/${game.get("selected")}/${id}`).done(resp => {
+                            game.set({board: resp.board, moves: resp.moves, selected: undefined});
+                        });
+                    });
                 }
 
                 td.html(div);
@@ -32,22 +69,10 @@ $(function() {
         table.html(tbody);
 
         $("body").html(table);
+    });
 
-        $("div.figure").click(e => {
-            if(resp.moves.map(pair => pair[0]).includes($(e.target).attr("id"))) {
-                $("div.selected").removeClass("selected");
-                $("div.cell").removeClass("legal");
-
-                $(e.target).addClass("selected");
-                resp.moves
-                    .filter(pair => pair[0] == $(e.target).attr("id"))
-                    .forEach(pair => $(`#${pair[1]}`).addClass("legal"));
-            }
-        });
-
-        table.on("click", "div.legal", e => {
-
-        });
+    $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
+        game.set({board: resp.board, moves: resp.moves, selected: undefined});
     });
 
 });
