@@ -2,20 +2,11 @@ import $ from 'jquery';
 
 import '../css/chess.css';
 
-import Backbone from 'backbone';
+import _ from 'underscore';
+import classNames from 'classnames';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-
-const Game = Backbone.Model.extend({
-
-    defaults: {
-        "board": [],
-        "moves": [],
-        "selected": undefined
-    }
-
-});
 
 const Figure = ({color, text}) => <div className={`figure ${color}`}>{text}</div>;
 
@@ -28,68 +19,98 @@ const ConnectColoredFigure = (ComposedComponent, color) => (
 const BlackFigure = ConnectColoredFigure(Figure, "black");
 const WhiteFigure = ConnectColoredFigure(Figure, "white");
 
-$(function() {
-
-    var selected = null;
-
-    const game = new Game();
-
-    game.bind("change", () => {
-        var table = $("<table>");
-        var tbody = $("<tbody>");
-        for(var i = 0; i < 8; i++) {
-            var tr = $("<tr>");
-            for(var j = 0; j < 8; j++) {
-                var td = $("<td>");
-                let div = $("<div>");
-                const id = `${"abcdefgh"[j]}${8-i}`;
-
-                div.attr("id", id);
-                div.addClass("cell");
-
-                if(game.get("board")[i][j]) {
-                    ReactDOM.render(
-                        game.get("board")[i][j].color == "black"
-                            ? <BlackFigure text={game.get("board")[i][j].text} />
-                            : <WhiteFigure text={game.get("board")[i][j].text} />,
-                        div[0]
-                    );
-
-                    if(game.get("moves").map(pair => pair[0]).includes(id)) {
-                        div.addClass("can_move");
-
-                        div.click(e => {
-                            game.set("selected", id);
-                        });
-                    }
-
-                    if(game.get("selected") && game.get("selected") == id) {
-                        div.addClass("selected");
-                    }
-                }
-
-                if(game.get("selected") && game.get("moves").filter(pair => pair[0] == game.get("selected")).map(pair => pair[1]).includes(id)) {
-                    div.addClass("legal");
-
-                    div.click(e => {
-                        $.post(`/board/${$("meta[name='game_id']").data("id")}/${game.get("selected")}/${id}`).done(resp => {
-                            game.set({board: resp.board, moves: resp.moves, selected: undefined});
-                        });
-                    });
-                }
-
-                td.html(div);
-                tr.append(td);
+const Cell = ({id, moves, selected, children, onSelect, onMove}) => (
+    <div
+        id={id}
+        className={classNames({
+            cell: true,
+            can_move: moves && moves.map(pair => pair[0]).includes(id),
+            selected: selected && selected == id,
+            legal: selected && moves && moves.filter(pair => pair[0] == selected).map(pair => pair[1]).includes(id)
+        })}
+        onClick={e => {
+            if(moves && moves.map(pair => pair[0]).includes(id)) {
+                onSelect(id);
             }
-            tbody.append(tr);
-        }
-        table.html(tbody);
 
-        $("body").html(table);
-    });
+            if(selected && moves && moves.filter(pair => pair[0] == selected).map(pair => pair[1]).includes(id)) {
+                $.post(`/board/${$("meta[name='game_id']").data("id")}/${selected}/${id}`).done(resp => {
+                    onMove(resp);
+                });
+            }
+        }}
+    >
+        {children}
+    </div>
+);
 
-    $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
-        game.set({board: resp.board, moves: resp.moves, selected: undefined});
-    });
+class Board extends React.Component {
 
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            board: undefined,
+            moves: undefined,
+            selected: undefined
+        };
+    }
+
+    componentDidMount() {
+        $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
+            this.setState({
+                board: resp.board,
+                moves: resp.moves,
+                selected: undefined
+            });
+        });
+    }
+
+    render() {
+        const {board} = this.state;
+        
+        return (
+            <table>
+                <tbody>
+                    {_.range(8).map(row => (
+                        <tr key={row}>
+                            {_.range(8).map(col => {
+                                const id = `${"abcdefgh"[col]}${8-row}`;
+
+                                return  (
+                                    <td key={col}>
+                                        <Cell
+                                            id={id}
+                                            selected={this.state.selected}
+                                            moves={this.state.moves}
+                                            onSelect={id => this.setState({selected: id})}
+                                            onMove={resp => this.setState({
+                                                board: resp.board,
+                                                moves: resp.moves,
+                                                selected: undefined
+                                            })}
+                                        >
+                                            {board && board[row][col] ? (
+                                                board[row][col].color == "black"
+                                                    ? <BlackFigure text={board[row][col].text} />
+                                                    : <WhiteFigure text={board[row][col].text} />
+                                            ) : null}
+                                        </Cell>
+                                    </td>
+                                )
+                            })}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
+        );
+    }
+
+}
+
+$(function() {
+    ReactDOM.render(
+        <Board/>,
+        $("#board")[0]
+    );
 });
