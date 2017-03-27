@@ -17,15 +17,16 @@ const Game = Backbone.Model.extend({
 
 });
 
-class Figure extends React.Component {
+const Figure = ({color, text}) => <div className={`figure ${color}`}>{text}</div>;
 
-    render() {
-        return (
-            <div className={`figure ${this.props.color}`}>{this.props.text}</div>
-        );
-    }
+const ConnectColoredFigure = (ComposedComponent, color) => (
+    (props) => (
+        <ComposedComponent {...props} color={color} />
+    )
+);
 
-}
+const BlackFigure = ConnectColoredFigure(Figure, "black");
+const WhiteFigure = ConnectColoredFigure(Figure, "white");
 
 $(function() {
 
@@ -48,8 +49,10 @@ $(function() {
 
                 if(game.get("board")[i][j]) {
                     ReactDOM.render(
-                        <Figure color={game.get("board")[i][j].color} text={game.get("board")[i][j].text} />,
-                        div
+                        game.get("board")[i][j].color == "black"
+                            ? <BlackFigure text={game.get("board")[i][j].text} />
+                            : <WhiteFigure text={game.get("board")[i][j].text} />,
+                        div[0]
                     );
 
                     if(game.get("moves").map(pair => pair[0]).includes(id)) {

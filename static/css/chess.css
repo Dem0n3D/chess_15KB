@@ -37,7 +37,7 @@ tr:nth-child(odd) td:nth-child(odd) {
     color: red;
 }
 
-.figure.can_move {
+.can_move {
     cursor: pointer;
 }
 
