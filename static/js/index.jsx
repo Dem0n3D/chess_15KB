@@ -7,6 +7,11 @@ import classNames from 'classnames';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore, combineReducers, applyMiddleware} from 'redux';
+import {Provider, connect} from 'react-redux';
+import thunkMiddleware from 'redux-thunk';
+
+import {select, move, load, figuresReducer} from './figures';
 
 const Figure = ({color, text}) => <div className={`figure ${color}`}>{text}</div>;
 
@@ -34,9 +39,7 @@ const Cell = ({id, moves, selected, children, onSelect, onMove}) => (
             }
 
             if(selected && moves && moves.filter(pair => pair[0] == selected).map(pair => pair[1]).includes(id)) {
-                $.post(`/board/${$("meta[name='game_id']").data("id")}/${selected}/${id}`).done(resp => {
-                    onMove(resp);
-                });
+                onMove(selected, id);
             }
         }}
     >
@@ -46,28 +49,12 @@ const Cell = ({id, moves, selected, children, onSelect, onMove}) => (
 
 class Board extends React.Component {
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            board: undefined,
-            moves: undefined,
-            selected: undefined
-        };
-    }
-
     componentDidMount() {
-        $.get(`/board/${$("meta[name='game_id']").data("id")}/figures`).done((resp) => {
-            this.setState({
-                board: resp.board,
-                moves: resp.moves,
-                selected: undefined
-            });
-        });
+        this.props.load();
     }
 
     render() {
-        const {board} = this.state;
+        const {board, moves, selected, onSelect, onMove} = this.props;
         
         return (
             <table>
@@ -81,14 +68,10 @@ class Board extends React.Component {
                                     <td key={col}>
                                         <Cell
                                             id={id}
-                                            selected={this.state.selected}
-                                            moves={this.state.moves}
-                                            onSelect={id => this.setState({selected: id})}
-                                            onMove={resp => this.setState({
-                                                board: resp.board,
-                                                moves: resp.moves,
-                                                selected: undefined
-                                            })}
+                                            selected={selected}
+                                            moves={moves}
+                                            onSelect={onSelect}
+                                            onMove={onMove}
                                         >
                                             {board && board[row][col] ? (
                                                 board[row][col].color == "black"
@@ -108,9 +91,34 @@ class Board extends React.Component {
 
 }
 
+const mapStateToProps = (state, props) => {
+    return {
+        board: state.figures.board,
+        moves: state.figures.moves,
+        selected: state.figures.selected
+    }
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        onSelect: (figure_id) => dispatch(select(figure_id)),
+        onMove: (from, to) => dispatch(move(props.id, from, to)),
+        load: () => dispatch(load(props.id))
+    }
+};
+
+const BoardContainer = connect(mapStateToProps, mapDispatchToProps)(Board);
+
+const reducer = combineReducers({
+    figures: figuresReducer
+});
+const store = createStore(reducer, applyMiddleware(thunkMiddleware));
+
 $(function() {
     ReactDOM.render(
-        <Board/>,
+        <Provider store={store}>
+            <BoardContainer id={$("meta[name='game_id']").data("id")} />
+        </Provider>,
         $("#board")[0]
     );
 });
