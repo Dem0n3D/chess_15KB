@@ -13,7 +13,7 @@ import thunkMiddleware from 'redux-thunk';
 
 import {select, move, load, figuresReducer} from './figures';
 
-const Figure = ({color, text}) => <div className={`figure ${color}`}>{text}</div>;
+export const Figure = ({color, text}) => <div className={`figure ${color}`}>{text}</div>;
 
 const ConnectColoredFigure = (ComposedComponent, color) => (
     (props) => (
@@ -21,8 +21,8 @@ const ConnectColoredFigure = (ComposedComponent, color) => (
     )
 );
 
-const BlackFigure = ConnectColoredFigure(Figure, "black");
-const WhiteFigure = ConnectColoredFigure(Figure, "white");
+export const BlackFigure = ConnectColoredFigure(Figure, "black");
+export const WhiteFigure = ConnectColoredFigure(Figure, "white");
 
 const Cell = ({id, moves, selected, children, onSelect, onMove}) => (
     <div

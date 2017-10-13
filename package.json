@@ -4,7 +4,14 @@
   "description": "* Настроить отображение фигур (выравнивание, цвет, размер) * Реализовать перемещение фигур с помощью гиперссылок и redirect",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
+  },
+  "jest": {
+      "moduleNameMapper": {
+          "\\.(css|less)$": "identity-obj-proxy"
+      }
   },
   "repository": {
     "type": "git",
@@ -30,17 +37,25 @@
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.7.6",
-    "babel-jest": "^16.0.0",
+    "babel-jest": "^18.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-decorators-legacy": "^1.3.4",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-es2015": "^6.18.0",
     "babel-preset-react": "^6.16.0",
     "css-loader": "^0.23.1",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-15": "^1.0.1",
+    "enzyme-to-json": "^3.1.1",
     "expose-loader": "^0.7.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^18.1.0",
+    "jest-css-modules": "^1.1.0",
+    "react-test-renderer": "^15.4.2",
     "style-loader": "^0.13.1",
+    "webpack": "^1.15.0",
     "webpack-bundle-tracker": "0.0.93"
   }
 }
