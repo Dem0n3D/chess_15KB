@@ -1,4 +1,5 @@
 import $ from 'jquery';
+import fetch from 'isomorphic-fetch'
 
 export const FIGURE_SELECT = "FIGURE_SELECT";
 export const SET_BOARD_STATE= "SET_BOARD_STATE";
@@ -10,7 +11,7 @@ export function select(id) {
     }
 }
 
-function set_board_state(board, moves) {
+export function set_board_state(board, moves) {
     return {
         type: SET_BOARD_STATE,
         board: board,
@@ -28,9 +29,9 @@ export function move(board_id, from, to) {
 
 export function load(board_id) {
     return (dispatch, getState) => {
-        $.get(`/board/${board_id}/figures`).done((resp) => {
-            dispatch(set_board_state(resp.board, resp.moves));
-        });
+        return fetch(`http://127.0.0.1:5000/board/${board_id}/figures`)
+            .then(resp => resp.json())
+            .then(data => dispatch(set_board_state(data.board, data.moves)));
     }
 }
 

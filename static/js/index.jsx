@@ -47,7 +47,7 @@ const Cell = ({id, moves, selected, children, onSelect, onMove}) => (
     </div>
 );
 
-class Board extends React.Component {
+export class Board extends React.Component {
 
     componentDidMount() {
         this.props.load();

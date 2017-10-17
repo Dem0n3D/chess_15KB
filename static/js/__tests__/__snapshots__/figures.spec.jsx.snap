@@ -1,13 +1,577 @@
+exports[`test should render a board 1`] = `
+<table>
+  <tbody>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a8">
+          <div
+            class="figure black">
+            ♜
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b8">
+          <div
+            class="figure black">
+            ♞
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c8">
+          <div
+            class="figure black">
+            ♝
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d8">
+          <div
+            class="figure black">
+            ♛
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e8">
+          <div
+            class="figure black">
+            ♚
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f8">
+          <div
+            class="figure black">
+            ♝
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g8">
+          <div
+            class="figure black">
+            ♞
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h8">
+          <div
+            class="figure black">
+            ♜
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f7">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h7">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g6">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h6">
+          
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f5">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g5">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h5">
+          
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g4">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h4">
+          
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e3">
+          <div
+            class="figure black">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g3">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h3">
+          
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e2">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g2">
+          
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h2">
+          <div
+            class="figure white">
+            ♟
+          </div>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div
+          class="cell"
+          id="a1">
+          <div
+            class="figure white">
+            ♜
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="b1">
+          <div
+            class="figure white">
+            ♞
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="c1">
+          <div
+            class="figure white">
+            ♝
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="d1">
+          <div
+            class="figure white">
+            ♛
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="e1">
+          <div
+            class="figure white">
+            ♚
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="f1">
+          <div
+            class="figure white">
+            ♝
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="g1">
+          <div
+            class="figure white">
+            ♞
+          </div>
+        </div>
+      </td>
+      <td>
+        <div
+          class="cell"
+          id="h1">
+          <div
+            class="figure white">
+            ♜
+          </div>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
 exports[`test should render a figure 1`] = `
 <div
-  className="figure white">
+  class="figure white">
   ♛
 </div>
 `;
 
 exports[`test should render a figure 2`] = `
 <div
-  className="figure black">
+  class="figure black">
   ♚
 </div>
 `;
