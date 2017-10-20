@@ -1,4 +1,5 @@
 Flask
 Flask-SQLAlchemy
+psycopg2
 alembic
 python-chess
