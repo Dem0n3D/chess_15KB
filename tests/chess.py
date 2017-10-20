@@ -35,13 +35,13 @@ class TestChess(unittest.TestCase):
         db.session.rollback()
 
     def test_board(self):
-        id = db.session.query(func.max(Game.id))[0][0] + 1
+        id = (db.session.query(func.max(Game.id))[0][0] or 0) + 1
         r1 = self.client.get("/board/"+str(id))
         r2 = self.client.get("/board/"+str(id))
         self.assertEquals(r1.data.decode("utf-8"), r2.data.decode("utf-8"))
 
     def test_board1(self):
-        id = db.session.query(func.max(Game.id))[0][0] + 1
+        id = (db.session.query(func.max(Game.id))[0][0] or 0) + 1
         self.client.get("/board/"+str(id))
         r = self.client.get("/board/{}/figures".format(id))
         self.assertEquals(r.status_code, 200)
@@ -55,7 +55,7 @@ class TestChess(unittest.TestCase):
         self.assertEquals(data["board"], game.board())
 
     def test_turn(self):
-        id = db.session.query(func.max(Game.id))[0][0] + 1
+        id = (db.session.query(func.max(Game.id))[0][0] or 0) + 1
         self.client.get("/board/"+str(id))
         r = self.client.post("/board/{}/{}/{}".format(id, "e2", "e4"), follow_redirects=True)
         self.assertEquals(r.status_code, 200)
