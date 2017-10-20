@@ -1,5 +1,7 @@
 # -*- coding: utf_8 -*-
+
 import json
+import os
 import unittest
 
 import chess
@@ -16,7 +18,7 @@ class TestChess(unittest.TestCase):
     def setUp(self):
         self.app = Flask(__name__, template_folder="../templates")
         self.app.config["DEBUG"] = True
-        self.app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://chess:qwerty@localhost:15435/chess'
+        self.app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB', 'postgresql://chess:qwerty@localhost:15435/chess')
         self.app.config['SQLALCHEMY_ECHO'] = True
         self.app.register_blueprint(bp)
 
