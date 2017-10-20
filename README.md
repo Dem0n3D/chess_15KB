@@ -1,4 +1,4 @@
-# Flask
+# FlaskChess [![Build Status](https://travis-ci.org/Dem0n3D/chess_15KB.svg?branch=master)](https://travis-ci.org/Dem0n3D/chess_15KB)
 
 ## Задание 1
 * Настроить отображение фигур (выравнивание, цвет, размер)
