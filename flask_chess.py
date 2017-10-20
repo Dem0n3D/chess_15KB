@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, render_template, redirect, url_for, jsonify, Blueprint
 
 from alchemy import db
@@ -7,7 +9,7 @@ from models.chess import *
 app = Flask(__name__)
 app.config["DEBUG"] = True
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://chess:qwerty@localhost:15435/chess'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB', 'postgresql://chess:qwerty@localhost:15435/chess')
 app.config['SQLALCHEMY_ECHO'] = True
 
 db.init_app(app)
